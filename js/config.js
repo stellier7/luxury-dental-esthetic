@@ -71,10 +71,8 @@ const config = {
     accentColor: "#C0C0C0",
     primaryDark: "",
     softBg: "",
-    // TODO: Add practice logo — drop logo.png or logo.svg in assets/images/ and set path here
-    logoUrl: "",
-    // TODO: Replace with client hero photo — drop hero.jpg (or hero.jpeg) in assets/images/
-    heroImageUrl: "assets/images/hero.jpg",
+    logoUrl: "assets/images/logo.jpeg",
+    heroImageUrl: "assets/images/hero.jpeg",
   },
 
   // ---------------------------------------------------------------------------
@@ -255,8 +253,7 @@ const config = {
         en: "Dr. Auxy Duarte is an endodontics specialist with many years of experience helping patients preserve their smile. Her passion is relieving dental pain and offering treatments that reflect the calm and confidence her patients deserve.",
         es: "Soy especialista en Endodoncia, con muchos años de trayectoria, ayudando a mis pacientes a conservar su sonrisa. Mi pasión es aliviar el dolor dental y ofrecer tratamientos que reflejen la tranquilidad y confianza a quienes me visitan.",
       },
-      // TODO: Replace with Dra. Auxy Duarte photo — drop file in assets/images/ (e.g. dentist.jpg or dra-auxy-duarte.jpg)
-      photoUrl: "assets/images/dentist.jpg",
+      photoUrl: "assets/images/dentist.jpeg",
     },
   ],
 
@@ -323,11 +320,16 @@ const config = {
     },
   ],
 
-  // ---------------------------------------------------------------------------
-  // SMILE GALLERY — empty array hides the section
-  // TODO: Add gallery photos — drop images in assets/images/gallery/ and list paths here
-  // ---------------------------------------------------------------------------
-  gallery: [],
+  gallery: [
+    "assets/images/gallery/IMG_0412.jpeg",
+    "assets/images/gallery/IMG_0413.jpeg",
+    "assets/images/gallery/IMG_0414.jpeg",
+    "assets/images/gallery/IMG_0415.jpeg",
+    "assets/images/gallery/IMG_0416.jpeg",
+    "assets/images/gallery/IMG_0417.jpeg",
+    "assets/images/gallery/IMG_0418.jpeg",
+    "assets/images/gallery/IMG_0419.jpeg",
+  ],
 
   // ---------------------------------------------------------------------------
   // SOCIAL LINKS — leave blank to hide that icon

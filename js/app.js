@@ -109,6 +109,8 @@
       metaDesc.setAttribute("content", description);
     }
 
+    updateHeadMeta();
+
     renderBrand();
     renderNav();
     renderLangToggle();
@@ -132,6 +134,43 @@
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       el.textContent = t(el.getAttribute("data-i18n"));
     });
+  }
+
+  function updateHeadMeta() {
+    const description = cfg.metadata
+      ? localized(cfg.metadata)
+      : `${cfg.practice.name} — ${localized(cfg.practice.tagline)}`;
+    const title = `${cfg.practice.name} · ${localized(cfg.practice.tagline)}`;
+    const logoUrl = cfg.branding?.logoUrl || "";
+    const heroUrl = cfg.branding?.heroImageUrl || "";
+    const shareImage = logoUrl || heroUrl;
+    const abs = (path) => (path.startsWith("/") ? path : `/${path}`);
+
+    const setMetaContent = (selector, content) => {
+      const el = document.querySelector(selector);
+      if (el && content) el.setAttribute("content", content);
+    };
+
+    setMetaContent('meta[property="og:title"]', title);
+    setMetaContent('meta[property="og:description"]', description);
+    setMetaContent('meta[name="twitter:title"]', title);
+    setMetaContent('meta[name="twitter:description"]', description);
+
+    if (shareImage) {
+      const imagePath = abs(shareImage);
+      setMetaContent('meta[property="og:image"]', imagePath);
+      setMetaContent('meta[name="twitter:image"]', imagePath);
+    }
+
+    if (logoUrl) {
+      const logoPath = abs(logoUrl);
+      document
+        .querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')
+        .forEach((link) => {
+          link.href = logoPath;
+          if (link.rel === "icon") link.type = "image/jpeg";
+        });
+    }
   }
 
   // -------------------------------------------------------------------------
