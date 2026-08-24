@@ -91,6 +91,7 @@
     if (b.primaryColor) root.style.setProperty("--color-primary", b.primaryColor);
     if (b.accentColor) root.style.setProperty("--color-accent", b.accentColor);
     if (b.primaryDark) root.style.setProperty("--color-primary-dark", b.primaryDark);
+    if (b.accentDark) root.style.setProperty("--color-accent-dark", b.accentDark);
     if (b.softBg) root.style.setProperty("--color-soft-bg", b.softBg);
   }
 
