@@ -67,11 +67,11 @@ const config = {
   // BRANDING
   // ---------------------------------------------------------------------------
   branding: {
-    primaryColor: "#C6A15B",
-    accentColor: "#E2C275",
-    primaryDark: "#8B6914",
-    accentDark: "#6B5010",
-    softBg: "#0A0A0A",
+    primaryColor: "#E8C547",
+    accentColor: "#FFE08A",
+    primaryDark: "#C9A227",
+    accentDark: "#A68518",
+    softBg: "#000000",
     logoUrl: "assets/images/logo.jpeg",
     heroImageUrl: "assets/images/hero.jpeg",
   },
