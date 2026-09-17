@@ -286,12 +286,14 @@
   function renderHero() {
     const nameEl = document.querySelector("[data-practice-name]");
     const taglineEl = document.querySelector("[data-hero-tagline]");
-    const badgeEl = document.querySelector("[data-hero-badge]");
+    const badgeTextEl = document.querySelector("[data-hero-badge-text]");
+    const scrollCueLabel = document.querySelector("[data-scroll-cue-label]");
     const img = document.querySelector("[data-hero-image]");
 
     if (nameEl) nameEl.textContent = cfg.practice.name;
     if (taglineEl) taglineEl.textContent = localized(cfg.practice.tagline);
-    if (badgeEl) badgeEl.textContent = t("hero.badge");
+    if (badgeTextEl) badgeTextEl.textContent = t("hero.badge");
+    if (scrollCueLabel) scrollCueLabel.textContent = t("hero.scrollCue");
 
     if (img) {
       img.src = cfg.branding.heroImageUrl || "";
@@ -1749,10 +1751,10 @@
             entry.target.classList.add('in-view');
             logDebug(`${label}: FIRED`);
             
-            // Remove will-change after animation completes
+            // Remove will-change after animation completes (~1s Vanessa-paced reveal)
             setTimeout(() => {
               entry.target.classList.add('animated');
-            }, 700);
+            }, 1100);
 
             // Unobserve after animating (one-time animation)
             animationObserver.unobserve(entry.target);

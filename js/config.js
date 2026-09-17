@@ -96,6 +96,7 @@ const config = {
       hero: {
         badge: "New Patients Welcome",
         cta: "Book Appointment",
+        scrollCue: "Scroll",
       },
       trust: {
         years: "Years in practice",
@@ -175,6 +176,7 @@ const config = {
       hero: {
         badge: "Nuevos Pacientes Bienvenidos",
         cta: "Agendar Cita",
+        scrollCue: "Desliza",
       },
       trust: {
         years: "Años de experiencia",
