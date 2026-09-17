@@ -1891,8 +1891,18 @@ body.gallery-lightbox-open {
     pointer-events: auto;
   }
 
-  body {
+  /* Reserve space only while the sticky CTA is actually shown */
+  body:has(.sticky-bar:not([hidden])) {
     padding-bottom: calc(var(--sticky-bar-h) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Keep the Desliza cue above the sticky book bar */
+  .hero__scroll-cue {
+    bottom: calc(var(--sticky-bar-h) + 0.85rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  body:not(:has(.sticky-bar:not([hidden]))) .hero__scroll-cue {
+    bottom: 1.75rem;
   }
 }
 
