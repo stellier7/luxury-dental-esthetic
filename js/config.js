@@ -34,8 +34,8 @@ const config = {
       es: "Somos el mejor centro odontológico, expertos en todas las especialidades dentales",
     },
 
-    phone: "+504 9358-2585",
-    phoneTel: "50493582585",
+    phone: "+504 3171-5154",
+    phoneTel: "50431715154",
 
     address: {
       street: "Torre Agalta, Bulevar Morazán",

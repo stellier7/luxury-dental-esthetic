@@ -8,7 +8,8 @@ const http = require("http");
 
 const PORT = 8773;
 const BASE = `http://127.0.0.1:${PORT}`;
-const WA_PREFIX = "https://wa.me/50493582585";
+const WA_PREFIX = "https://wa.me/50431715154";
+const PHONE_DISPLAY = "+504 3171-5154";
 const FACEBOOK = "https://www.facebook.com/dentalesthetichn";
 const INSTAGRAM = "https://www.instagram.com/luxurydentalesthetichn?srtk=OTlzZXIxeXU5dGI=";
 
@@ -41,6 +42,11 @@ async function auditContact(page, viewport) {
 
   const whatsappLinks = links.filter((href) => href.includes("wa.me"));
   assert(whatsappLinks.length > 0, `No WhatsApp links at ${viewport.width}px`);
+  const visiblePhone = await page.locator("body").innerText();
+  assert(
+    visiblePhone.includes(PHONE_DISPLAY),
+    `Expected visible phone ${PHONE_DISPLAY} at ${viewport.width}px`
+  );
   for (const href of whatsappLinks) {
     assert(
       href.startsWith(WA_PREFIX),
