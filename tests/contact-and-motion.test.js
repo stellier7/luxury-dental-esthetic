@@ -60,6 +60,33 @@ async function auditContact(page, viewport) {
     links.includes(INSTAGRAM),
     `Missing Instagram ${INSTAGRAM} at ${viewport.width}px. Found: ${links.filter((href) => href.includes("instagram.com")).join(", ") || "none"}`
   );
+
+  const iago = page.locator("[data-iago-footer]");
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(150);
+  const iagoHref = await iago.locator("a").getAttribute("href");
+  const iagoText = (await iago.innerText()).replace(/\s+/g, " ");
+  assert(
+    iagoHref === "https://www.iagodigital.com/",
+    `iAGO footer should link to https://www.iagodigital.com/, got ${iagoHref}`
+  );
+  assert(iagoText.includes("iAGO Digital"), `Footer credit should read iAGO Digital, got "${iagoText}"`);
+  assert(
+    /Diseñado por|Designed by/.test(iagoText),
+    `Footer credit should say it was designed by iAGO, got "${iagoText}"`
+  );
+
+  const covered = await page.evaluate(() => {
+    const credit = document.querySelector("[data-iago-footer]");
+    const button = document.querySelector("[data-whatsapp-float]");
+    if (!credit || !button) return true;
+    const a = credit.getBoundingClientRect();
+    const b = button.getBoundingClientRect();
+    const overlapX = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+    const overlapY = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+    return overlapX > 8 && overlapY > 8;
+  });
+  assert(!covered, `WhatsApp button covers the iAGO footer at ${viewport.width}px`);
 }
 
 async function auditFloat(page, viewport) {
