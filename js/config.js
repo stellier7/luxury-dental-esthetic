@@ -139,6 +139,9 @@ const config = {
       stickyBar: {
         cta: "Book Appointment",
       },
+      whatsapp: {
+        float: "Chat on WhatsApp",
+      },
       footer: {
         contact: "Contact",
         hours: "Hours",
@@ -217,6 +220,9 @@ const config = {
       },
       stickyBar: {
         cta: "Agendar Cita",
+      },
+      whatsapp: {
+        float: "Escríbenos por WhatsApp",
       },
       footer: {
         contact: "Contacto",
@@ -336,8 +342,8 @@ const config = {
   // SOCIAL LINKS — leave blank to hide that icon
   // ---------------------------------------------------------------------------
   socials: {
-    instagram: "https://www.instagram.com/luxurydentalesthetichn",
-    facebook: "https://www.facebook.com/profile.php?id=61568309054456",
+    instagram: "https://www.instagram.com/luxurydentalesthetichn?srtk=OTlzZXIxeXU5dGI=",
+    facebook: "https://www.facebook.com/dentalesthetichn",
   },
 };
 

@@ -116,6 +116,7 @@
     renderNav();
     renderLangToggle();
     renderBookCTAs();
+    renderWhatsAppFloat();
     renderHero();
     renderTrust();
     renderServices();
@@ -241,14 +242,34 @@
   function whatsappHref(message = "") {
     const digits = (cfg.practice.phoneTel || cfg.practice.phone || "").replace(/\D/g, "");
     if (!digits) return "#";
-    
-    // WhatsApp link format: https://wa.me/1234567890?text=Message
-    const baseUrl = `https://wa.me/1${digits}`;
+
+    // wa.me expects country code + number. phoneTel already includes 504.
+    const baseUrl = `https://wa.me/${digits}`;
     if (message) {
-      const encodedMessage = encodeURIComponent(message);
-      return `${baseUrl}?text=${encodedMessage}`;
+      return `${baseUrl}?text=${encodeURIComponent(message)}`;
     }
     return baseUrl;
+  }
+
+  function renderWhatsAppFloat() {
+    const el = document.querySelector("[data-whatsapp-float]");
+    if (!el) return;
+
+    const digits = (cfg.practice.phoneTel || cfg.practice.phone || "").replace(/\D/g, "");
+    if (!digits) {
+      el.hidden = true;
+      return;
+    }
+
+    const message = lang === "es"
+      ? "Hola, me gustaría más información"
+      : "Hello, I would like more information";
+
+    el.hidden = false;
+    el.href = whatsappHref(message);
+    el.target = "_blank";
+    el.rel = "noopener noreferrer";
+    el.setAttribute("aria-label", t("whatsapp.float"));
   }
 
   function renderBookCTAs() {
@@ -1697,7 +1718,7 @@
       services: 0.1,
       dentists: 0.08,
       gallery: 0.11,
-      testimonials: 0,
+      testimonials: 0.06,
       financing: 0.07,
       location: 0.08,
     };
@@ -1719,7 +1740,7 @@
         const rect = section.getBoundingClientRect();
         const sectionCenter = rect.top + rect.height * 0.5;
         const distance = sectionCenter - viewportCenter;
-        const offset = distance * speed * -0.35;
+        const offset = distance * speed * -0.5;
         section.style.setProperty('--parallax-y', `${offset.toFixed(2)}px`);
       });
     }
@@ -1784,7 +1805,7 @@
       item.setAttribute('data-animate', 'slide-up');
       item.setAttribute('data-anim-label', `trust-item-${i + 1}`);
       item.style.transitionDelay = `${i * 80}ms`;
-      animationObserver.observe(item);
+      observeAnimate(item);
     });
   }
 
@@ -1796,7 +1817,7 @@
       card.setAttribute('data-animate', direction);
       card.setAttribute('data-anim-label', `service-card-${i + 1}-${direction}`);
       card.style.transitionDelay = `${i * 100}ms`;
-      animationObserver.observe(card);
+      observeAnimate(card);
     });
   }
 
@@ -1809,7 +1830,7 @@
       const direction = i % 2 === 0 ? "slide-left" : "slide-right";
       card.setAttribute("data-animate", direction);
       card.setAttribute("data-anim-label", `dentist-card-${i + 1}`);
-      animationObserver.observe(card);
+      observeAnimate(card);
     });
   }
 
@@ -1822,7 +1843,7 @@
       item.setAttribute("data-animate", "fade-scale");
       item.setAttribute("data-anim-label", `gallery-item-${i + 1}`);
       item.style.transitionDelay = `${Math.min(i * 60, 400)}ms`;
-      animationObserver.observe(item);
+      observeAnimate(item);
     });
   }
 
@@ -1833,7 +1854,7 @@
 
     wrap.setAttribute("data-animate", "fade");
     wrap.setAttribute("data-anim-label", "testimonials-wrap");
-    animationObserver.observe(wrap);
+    observeAnimate(wrap);
   }
 
   // FINANCING - Staggered scale fade per image
@@ -1843,7 +1864,7 @@
       item.setAttribute('data-animate', 'fade-scale');
       item.setAttribute('data-anim-label', `financing-image-${i + 1}`);
       item.style.transitionDelay = `${i * 120}ms`;
-      animationObserver.observe(item);
+      observeAnimate(item);
     });
   }
 
@@ -1853,7 +1874,7 @@
     if (locationCard) {
       locationCard.setAttribute('data-animate', 'slide-up');
       locationCard.setAttribute('data-anim-label', 'location-card');
-      animationObserver.observe(locationCard);
+      observeAnimate(locationCard);
     }
   }
 
@@ -1865,7 +1886,7 @@
       const sectionName = section ? section.getAttribute('data-section') : `section-${i}`;
       header.setAttribute('data-animate', 'slide-up');
       header.setAttribute('data-anim-label', `${sectionName}-header`);
-      animationObserver.observe(header);
+      observeAnimate(header);
     });
   }
 
@@ -1875,8 +1896,22 @@
     if (footerInner) {
       footerInner.setAttribute('data-animate', 'slide-up');
       footerInner.setAttribute('data-anim-label', 'footer');
-      animationObserver.observe(footerInner);
+      observeAnimate(footerInner);
     }
+  }
+
+  function observeAnimate(el) {
+    if (!animationObserver || !el) return;
+
+    const rect = el.getBoundingClientRect();
+    const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+    const alreadyVisible = rect.bottom > 0 && rect.top < viewHeight * 0.9;
+    if (alreadyVisible) {
+      el.classList.add("in-view", "animated");
+      return;
+    }
+
+    animationObserver.observe(el);
   }
 
   // Re-initialize animations after content changes (language swap)

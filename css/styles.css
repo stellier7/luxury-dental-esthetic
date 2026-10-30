@@ -621,7 +621,10 @@ body.nav-open {
   border-bottom: 1px solid var(--color-border);
   position: relative;
   transform: translate3d(0, var(--parallax-y, 0), 0);
-  will-change: transform;
+}
+
+.section > .container {
+  transform: translate3d(0, var(--parallax-y, 0), 0);
 }
 
 .trust__list {
@@ -1669,6 +1672,101 @@ body.gallery-lightbox-open {
 }
 
 /* ---------------------------------------------------------------------------
+   Floating WhatsApp
+   --------------------------------------------------------------------------- */
+.whatsapp-float {
+  position: fixed;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 2px rgba(232, 197, 71, 0.75);
+  animation: whatsapp-glow 1.8s ease-out infinite;
+}
+
+.whatsapp-float[hidden] {
+  display: none !important;
+}
+
+.whatsapp-float:hover {
+  color: #ffffff;
+  animation-play-state: paused;
+  transform: translateY(-2px) scale(1.06);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.45),
+    0 0 0 2px rgba(255, 224, 138, 0.95),
+    0 0 0 10px rgba(37, 211, 102, 0.18);
+}
+
+.whatsapp-float:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring), 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+}
+
+.whatsapp-float::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(37, 211, 102, 0.55);
+  z-index: -1;
+  animation: whatsapp-pulse 1.8s ease-out infinite;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  80%,
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@keyframes whatsapp-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.4),
+      0 0 0 2px rgba(232, 197, 71, 0.8),
+      0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+
+  50% {
+    transform: scale(1.14);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.45),
+      0 0 0 3px rgba(255, 224, 138, 0.95),
+      0 0 0 16px rgba(37, 211, 102, 0.4);
+  }
+}
+
+body.nav-open .whatsapp-float,
+body.gallery-lightbox-open .whatsapp-float {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
    Sticky mobile book bar
    --------------------------------------------------------------------------- */
 .sticky-bar {
@@ -1867,7 +1965,36 @@ body.hero-loaded .hero__actions { transition-delay: 440ms; }
   }
 }
 
-/* Sections sit on pure black — parallax washes disabled for consistent dark canvas */
+@media (prefers-reduced-motion: reduce) {
+  .hero__content > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-animate]:not(.in-view):not(.animated) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .section > .container,
+  .trust,
+  .hero__media,
+  .hero__veil,
+  .hero__content {
+    transform: none !important;
+  }
+
+  .whatsapp-float,
+  .whatsapp-float::before {
+    animation: none !important;
+  }
+
+  .whatsapp-float::before {
+    opacity: 0;
+  }
+}
+
+/* Sections sit on pure black — decorative washes stay off so the canvas stays black */
 .services,
 .gallery,
 .financing,
